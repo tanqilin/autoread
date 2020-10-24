@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeAllMask"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagReportViewIds"
+    android:canRetrieveWindowContent="true"
+    android:canPerformGestures = "true"
+    android:description="@string/service_description"
+    android:notificationTimeout="100"/>
+
+    <!-- android:accessibilityEventTypes="typeAllMask"  响应的事件类型（单击、长按、滑动、通知等），typeAllMask表示响应全部事件 -->

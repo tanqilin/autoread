@@ -1,0 +1,16 @@
+文章详细页面返回ID：com.moocxuetang:id/ll_right_left
+分享按钮：com.moocxuetang:id/track_menu
+        下拉分享按钮：com.moocxuetang:id/ll_share
+        分享到学友圈：com.moocxuetang:id/item_share_tv
+打卡成功返回：com.moocxuetang:id/ll_public_left
+
+    打卡得分：com.moocxuetang:id/tip2
+    举报得分：com.moocxuetang:id/tip3
+    学习得分：com.moocxuetang:id/tip4
+    分享得分：com.moocxuetang:id/tip5
+
+发现页面“文章”：com.moocxuetang:id/tvTabTitle
+
+
+学习强国相关控件
+积分按钮：cn.xuexi.android:id/ll_comm_head_score

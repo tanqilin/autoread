@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">自动刷分机器人</string>
+    <string name="action_settings">设 置</string>
+    <string name="action_study">使用教程</string>
+    <string name="action_about">关 于</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">自动阅读</string>
+    <string name="second_fragment_label">设置</string>
+    <string name="help_fragment_label">使用帮助</string>
+    <string name="next">下一步</string>
+    <string name="previous">返回上一页</string>
+
+    <string name="hello_first_fragment">Hello 第一个 fragment</string>
+    <string name="hello_second_fragment">Hello 第二个 fragment. Arg: %1$s</string>
+
+    <!-- 按钮名称 -->
+    <string name="btn_open_server">打开辅助服务</string>
+    <string name="btn_open_app">打开军职在线</string>
+    <string name="btn_open_xuexiqiangguo">打开学习强国</string>
+
+    <!-- 服务相关 -->
+    <string name="service_label">自动阅读服务</string>
+    <string name="service_description">开启服务后才能启用自动阅读功能</string>
+
+    <!-- 军职在线相关资源ID -->
+    <string name="track_menu">com.moocxuetang:id/track_menu</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+</resources>

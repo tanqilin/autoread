@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_study:
                 controller.navigate(R.id.HelpFragment);
                 break;
+            case R.id.action_newapp:
+
+                break;
             case R.id.action_about:
                 AlertDialog alertDialog1 = new AlertDialog.Builder(this)
                         .setTitle("关于我") //标题

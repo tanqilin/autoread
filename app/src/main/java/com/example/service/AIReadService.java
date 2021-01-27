@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -27,6 +28,7 @@ import com.example.models.MoocStudy;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,12 +36,14 @@ public class AIReadService extends BaseService {
     private static final String TAG = "";
     public static AIReadService mService;
     private static int loopCount = 6;
+    private Random rand;
     private MoocStudy moocStudy = MoocStudy.getInstance();
     //初始话服务
     @Override
     public void onServiceConnected(){
         super.onServiceConnected();
         mService = this;
+        rand = new Random();
     }
 
     //实现辅助功能
@@ -211,7 +215,8 @@ public class AIReadService extends BaseService {
                 toastMsg("文章阅读中，还剩 " + loopCount + " 秒！");
 
                 dispatchGestureMove();
-                loopCount = loopCount - 8;
+
+                loopCount = loopCount - (5+rand.nextInt(5));
                 if (loopCount < 0) break;
 
                 Thread.sleep(8000);
@@ -233,7 +238,7 @@ public class AIReadService extends BaseService {
     public void dispatchGestureMove()
     {
         int i = 500;
-        int j = 2000;
+        int j = 1500;
         Point localPoint = new Point((int)(i * (Math.random() * 0.5D + 0.2D)), (int)(j * (Math.random() * 0.3D + 0.4D)));
 
         GestureDescription.Builder localBuilder = new GestureDescription.Builder();

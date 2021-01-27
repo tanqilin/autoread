@@ -64,7 +64,10 @@ public class MainActivity extends AppCompatActivity {
                 controller.navigate(R.id.HelpFragment);
                 break;
             case R.id.action_newapp:
-
+                AlertDialog showNew = new AlertDialog.Builder(this)
+                        .setView(R.layout.dialog_getupdate)
+                        .create();
+                showNew.show();
                 break;
             case R.id.action_about:
                 AlertDialog alertDialog1 = new AlertDialog.Builder(this)

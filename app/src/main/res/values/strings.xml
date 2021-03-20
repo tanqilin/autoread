@@ -2,7 +2,9 @@
     <string name="app_name">自动刷分机器人</string>
     <string name="action_settings">设 置</string>
     <string name="action_study">使用教程</string>
+    <string name="action_newapp">获取更新</string>
     <string name="action_about">关 于</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">自动阅读</string>
     <string name="second_fragment_label">设置</string>

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.appexmple">
-
-    <!--外部存储的写权限-->
+    <!-- 外部存储的写权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -14,11 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+
         <service
             android:name="com.example.service.BaseService"
             android:enabled="true"
-            android:exported="true"></service>
-        <!-- 辅助服务 -->
+            android:exported="true" /> <!-- 辅助服务 -->
         <service
             android:name="com.example.service.AIReadService"
             android:description="@string/service_description"

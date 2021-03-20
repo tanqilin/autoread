@@ -108,18 +108,23 @@ public class BaseService extends AccessibilityService {
     @Override
     public void onInterrupt() {
         toastMsg("服务已停止！！");
+        Log.i("","服务已停止！！");
         super.performGlobalAction(GLOBAL_ACTION_BACK);
     }
 
     // 获取字符串中的数字
     public int getStrIntNumber(String str){
-        String regEx="[^0-9]";
-        Pattern p = Pattern.compile(regEx);
-        Matcher m = p.matcher(str);
+        try {
+            String regEx = "[^0-9]";
+            Pattern p = Pattern.compile(regEx);
+            Matcher m = p.matcher(str);
 
-        String numStr =  m.replaceAll("").trim();
-        if(!numStr.isEmpty()){
-           return Integer.parseInt(numStr);
+            String numStr = m.replaceAll("").trim();
+            if (!numStr.isEmpty()) {
+                return Integer.parseInt(numStr);
+            }
+        }catch(Exception e){
+            return 0;
         }
         return 0;
     }

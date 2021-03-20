@@ -1,5 +1,6 @@
 package com.example.appexmple;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
         switch(id){
             case R.id.action_setting:
-                controller.navigate(R.id.SettingFragment);
+                Intent intent = new Intent(this , SettingsActivity.class);
+                startActivity(intent);
+                // controller.navigate(R.id.SettingFragment);
                 break;
             case R.id.action_study:
                 controller.navigate(R.id.HelpFragment);
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_about:
                 AlertDialog alertDialog1 = new AlertDialog.Builder(this)
                         .setTitle("关于我") //标题
-                        .setMessage("作者：谭其林\n邮箱：1135574399@qq.com\n声明：此程序只供学习使用\n\n使用中如有交流意见请发送到此邮箱！") //内容
+                        .setMessage("作者：谭其林\n邮箱：1135574399@qq.com\n声明：此程序只供学习使用\n\n1.微信搜索公众号“谭其林”获取最新版本！\n2.使用中如有交流意见可以直接发送消息给公众号！") //内容
                         .setIcon(R.drawable.tanqilin)//图标
                         .create();
                 alertDialog1.show();

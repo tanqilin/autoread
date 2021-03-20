@@ -72,6 +72,7 @@ public class AIReadService extends BaseService {
                     Thread.sleep(1500);
                     if(!moocStudy.isStartRead() && super.onClickNode("今日学习")) {
                         Thread.sleep(1500);
+
                         moocStudy.setShareScore(getStrIntNumber(getNodeById("com.moocxuetang:id/tip5").getText().toString()));
                         moocStudy.setSignScore(getStrIntNumber(getNodeById("com.moocxuetang:id/tip2").getText().toString()));
                         moocStudy.setStudyScore(getStrIntNumber(getNodeById("com.moocxuetang:id/tip4").getText().toString()));
@@ -103,7 +104,7 @@ public class AIReadService extends BaseService {
                             moocStudy.reading = true;
 
                             // 开始分享和阅读 ？
-                            Thread.sleep(1000);
+                            Thread.sleep(2000);
                             autoShare(event);
                             autoReadArticle();
                         }else{
@@ -210,15 +211,15 @@ public class AIReadService extends BaseService {
         loopCount = moocStudy.readTime;
         while (moocStudy.reading) {
             try {
+                //滚动屏幕
                 int t = r.nextInt(5)+5;
-                //要做的事情
                 toastMsg("文章阅读中，还剩 " + loopCount + " 秒！");
-
                 dispatchGestureMove();
-                loopCount = loopCount - t;
-                if (loopCount < 0) break;
 
+                loopCount = loopCount - t;
                 Thread.sleep(t*1000);
+
+                if (loopCount < t) break;
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 break;
@@ -227,9 +228,11 @@ public class AIReadService extends BaseService {
 
         toastMsg("阅读成功");
         moocStudy.setStudyScore(moocStudy.getStudyScore() + 1);
-        if(!onClickNodeById("com.moocxuetang:id/ll_right_left")){
-            super.performGlobalAction(GLOBAL_ACTION_BACK);
-        }
+        super.performGlobalAction(GLOBAL_ACTION_BACK);
+
+//        if(!onClickNodeById("com.moocxuetang:id/ll_right_left")){
+//            super.performGlobalAction(GLOBAL_ACTION_BACK);
+//        }
      }
 
     // 模拟手势滑动

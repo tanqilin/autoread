@@ -1,12 +1,10 @@
 package com.example.service;
 
 import android.accessibilityservice.AccessibilityService;
-import android.app.Service;
-import android.content.Intent;
-import android.os.Handler;
-import android.os.IBinder;
 import android.os.Looper;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Toast;
@@ -109,30 +107,8 @@ public class BaseService extends AccessibilityService {
 
     @Override
     public void onInterrupt() {
-
-    }
-
-    // 默认阅读方式
-    public void defaultRead(AccessibilityEvent event){
-        AccessibilityNodeInfo recyclerView = getRootInActiveWindow();
-        if(recyclerView != null){
-            // 根据ID找到文章列表容器
-            List<AccessibilityNodeInfo> infos = recyclerView.findAccessibilityNodeInfosByViewId("com.moocxuetang:id/rcy_hot_more");
-            if(!infos.isEmpty()) {
-                AccessibilityNodeInfo contails = infos.get(0);
-                // 查找容器中的文章列表
-                if (contails != null) {
-                    List<AccessibilityNodeInfo> childs = contails.findAccessibilityNodeInfosByViewId("com.moocxuetang:id/tvTitle");
-                    Iterator<AccessibilityNodeInfo> iterator = childs.iterator();
-
-                    while (iterator.hasNext()) {
-                        // Log.i(TAG, "文章标题: "+ iterator.next().getText());
-                        // 根据标题跳转
-                        // super.onClickNode(iterator.next().getText().toString());
-                    }
-                }
-            }
-        }
+        toastMsg("服务已停止！！");
+        super.performGlobalAction(GLOBAL_ACTION_BACK);
     }
 
     // 获取字符串中的数字

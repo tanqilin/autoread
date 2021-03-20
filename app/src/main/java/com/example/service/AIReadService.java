@@ -27,6 +27,7 @@ import com.example.models.MoocStudy;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,6 +36,8 @@ public class AIReadService extends BaseService {
     public static AIReadService mService;
     private static int loopCount = 6;
     private MoocStudy moocStudy = MoocStudy.getInstance();
+    private static Random r = new Random();
+
     //初始话服务
     @Override
     public void onServiceConnected(){
@@ -207,14 +210,15 @@ public class AIReadService extends BaseService {
         loopCount = moocStudy.readTime;
         while (moocStudy.reading) {
             try {
+                int t = r.nextInt(5)+5;
                 //要做的事情
                 toastMsg("文章阅读中，还剩 " + loopCount + " 秒！");
 
                 dispatchGestureMove();
-                loopCount = loopCount - 8;
+                loopCount = loopCount - t;
                 if (loopCount < 0) break;
 
-                Thread.sleep(8000);
+                Thread.sleep(t*1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 break;
@@ -232,23 +236,22 @@ public class AIReadService extends BaseService {
     @TargetApi(24)
     public void dispatchGestureMove()
     {
-        int i = 500;
-        int j = 2000;
-        Point localPoint = new Point((int)(i * (Math.random() * 0.5D + 0.2D)), (int)(j * (Math.random() * 0.3D + 0.4D)));
+        // 根据手机屏幕尺寸，决定滑动位置
+        DisplayMetrics dm2 = getResources().getDisplayMetrics();
+
+        int i = dm2.widthPixels;
+        int j = dm2.heightPixels;
+        Point localPoint = new Point((int)(i * (Math.random() * 0.5D + 0.2D)), (int)(j * (Math.random() * 0.5D + 0.4D)));
+
 
         GestureDescription.Builder localBuilder = new GestureDescription.Builder();
 
         Path localPath = new Path();
         localPath.moveTo(localPoint.x, localPoint.y);
-        localPath.lineTo((float)(localPoint.x + Math.random() * 50.0D), (float)(localPoint.y - 470 - Math.random() * 100.0D));
+        localPath.lineTo((float)(localPoint.x + Math.random() * 50.0D), (float)(localPoint.y - 470 - Math.random() * 300.0D));
 
         localBuilder.addStroke(new GestureDescription.StrokeDescription(localPath, 100L, 800L));
         dispatchGesture(localBuilder.build(), null, null);
-    }
-
-    @Override
-    public void onInterrupt() {
-
     }
 
     @Override

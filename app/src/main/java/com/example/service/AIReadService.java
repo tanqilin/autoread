@@ -23,8 +23,11 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.database.models.MoocConfig;
 import com.example.models.MoocStudy;
+import com.example.utils.MoocConfigUtil;
 
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -35,13 +38,18 @@ public class AIReadService extends BaseService {
     private static final String TAG = "";
     public static AIReadService mService;
     private static int loopCount = 6;
-    private MoocStudy moocStudy = MoocStudy.getInstance();
+    private MoocStudy moocStudy = null;
     private static Random r = new Random();
 
     //初始话服务
     @Override
     public void onServiceConnected(){
         super.onServiceConnected();
+        try {
+            moocStudy = MoocStudy.getInstance(MoocConfigUtil.readAppConfig(this.openFileInput("tanqilin.xml")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         mService = this;
     }
 

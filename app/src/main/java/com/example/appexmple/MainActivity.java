@@ -1,12 +1,12 @@
 package com.example.appexmple;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
-import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,8 +16,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.models.MoocStudy;
-
-import org.xmlpull.v1.XmlSerializer;
+import com.example.utils.MoocConfigUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,15 +35,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         /// 创建程序所需的相关文件
-        try {
-            initAppConfig();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        initAppConfig();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        MoocStudy.getInstance();
 
         // 关联toolbar跟 Navigation
         controller = Navigation.findNavController(this,R.id.nav_host_fragment);
@@ -101,35 +94,20 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 创建应用程序配置环境
      */
-    private void initAppConfig() throws IOException {
-        XmlSerializer serializer = Xml.newSerializer();
-
+    private void initAppConfig(){
         try {
-            serializer.setOutput(openFileOutput("tanqilin.xml", MODE_PRIVATE), "utf-8");
-            serializer.startDocument("utf-8", true);
-            //创建默认配置信息
-            serializer.startTag(null,"configs");
-            serializer.startTag(null,"mooc_config");
+            String[] files = this.fileList();
+            if(files.length == 0 ){
+                MoocConfigUtil.initAppConfig(openFileOutput("tanqilin.xml", MODE_PRIVATE));
+            }
 
-            serializer.attribute(null, "id", "0");
-
-            serializer.startTag(null,"count");
-            serializer.text("40");
-            serializer.endTag(null,"count");
-
-            serializer.startTag(null,"time");
-            serializer.text("50");
-            serializer.endTag(null,"time");
-
-            serializer.endTag(null,"mooc_config");
-            serializer.endTag(null,"configs");
-            serializer.endDocument(); //结束文档,并将内容写入文件
-
-            Log.i("","xml写入成功！");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//            if (!(new File(String.valueOf(this.getExternalFilesDir("tanqilin.xml")))).exists())
+//            {
+//                Log.i("1111",String.valueOf(this.getExternalFilesDir("tanqilin.xml")));
+//
+//                MoocConfigUtil.initAppConfig(openFileOutput("tanqilin.xml", MODE_PRIVATE));
+//            }
+        }catch (Exception e){}
     }
 
     @Override

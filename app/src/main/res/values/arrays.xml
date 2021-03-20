@@ -4,12 +4,14 @@
         <item>40篇</item>
         <item>45篇</item>
         <item>50篇</item>
+        <item>100篇</item>
     </string-array>
 
     <string-array name="read_count_values">
         <item>40</item>
         <item>45</item>
         <item>50</item>
+        <item>100</item>
     </string-array>
 
     <!-- 每篇文章阅读时长 -->

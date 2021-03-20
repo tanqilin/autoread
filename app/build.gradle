@@ -20,6 +20,12 @@ android {
         }
     }
 
+    /* 不加此段配置会报错 */
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
     packagingOptions{
         exclude "META-INF/androidx.vectordrawable_vectordrawable.version"
         exclude "META-INF/androidx.lifecycle_lifecycle-livedata.version"

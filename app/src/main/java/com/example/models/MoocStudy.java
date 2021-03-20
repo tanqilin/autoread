@@ -1,5 +1,10 @@
 package com.example.models;
 
+import android.content.Context;
+
+import com.example.database.models.MoocConfig;
+import com.example.utils.MoocConfigUtil;
+
 /*
 * 使用单例模式管理每日学习状态
  */
@@ -15,6 +20,7 @@ public class MoocStudy {
     public boolean startRead = false;           // 是否开始阅读
     public boolean reading = false;             // 正在阅读文章
 
+    private static MoocConfig config = null;
     private static MoocStudy instance = null;
 
     /* 军职在线相关资源ID */
@@ -22,12 +28,17 @@ public class MoocStudy {
     public static String ll_share = "com.moocxuetang:id/ll_share";                 // 下拉分享按钮
     public static String item_share_tv = "com.moocxuetang:id/item_share_iv";       // 分享到学友圈
 
-
     private MoocStudy(){}
 
-    public static MoocStudy getInstance(){
+    public static MoocStudy getInstance(MoocConfig config){
         if (instance == null) {
             instance = new MoocStudy();
+
+            /* 从配置文件中读取参数 */
+            if(config != null) {
+                instance.readNums = config.getReadCount();
+                instance.readTime = config.getReadTime();
+            }
         }
         return instance;
     }

@@ -9,7 +9,7 @@ public class MoocStudy {
     private int shareScore = 0;                 // 分享得分
 
     public int readTime = 48;                   // 阅读时长
-    public int readNums = 100;                   // 累计阅读文章数
+    public int readNums = 40;                   // 累计阅读文章数
 
     public boolean isSign = false;              // 是否签到
     public boolean startRead = false;           // 是否开始阅读

@@ -12,8 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.PreferenceFragmentCompat;
 
-import com.example.utils.FileUtil;
-
 /*
 *   程序设置页面
  */

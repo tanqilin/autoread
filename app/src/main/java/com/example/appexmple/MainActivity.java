@@ -2,6 +2,9 @@ package com.example.appexmple;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,7 +16,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.models.MoocStudy;
-import com.example.utils.FileUtil;
+
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.File;
+import java.io.IOException;
 
 /*
  * 程序主窗口
@@ -28,7 +35,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initAppConfig();
+        /// 创建程序所需的相关文件
+        try {
+            initAppConfig();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -89,9 +101,35 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 创建应用程序配置环境
      */
-    private void initAppConfig(){
-        FileUtil.createAppDirectory(this.getExternalFilesDir(""));
-        FileUtil.createFileDir("/config");
+    private void initAppConfig() throws IOException {
+        XmlSerializer serializer = Xml.newSerializer();
+
+        try {
+            serializer.setOutput(openFileOutput("tanqilin.xml", MODE_PRIVATE), "utf-8");
+            serializer.startDocument("utf-8", true);
+            //创建默认配置信息
+            serializer.startTag(null,"configs");
+            serializer.startTag(null,"mooc_config");
+
+            serializer.attribute(null, "id", "0");
+
+            serializer.startTag(null,"count");
+            serializer.text("40");
+            serializer.endTag(null,"count");
+
+            serializer.startTag(null,"time");
+            serializer.text("50");
+            serializer.endTag(null,"time");
+
+            serializer.endTag(null,"mooc_config");
+            serializer.endTag(null,"configs");
+            serializer.endDocument(); //结束文档,并将内容写入文件
+
+            Log.i("","xml写入成功！");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

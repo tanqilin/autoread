@@ -229,10 +229,6 @@ public class AIReadService extends BaseService {
         toastMsg("阅读成功");
         moocStudy.setStudyScore(moocStudy.getStudyScore() + 1);
         super.performGlobalAction(GLOBAL_ACTION_BACK);
-
-//        if(!onClickNodeById("com.moocxuetang:id/ll_right_left")){
-//            super.performGlobalAction(GLOBAL_ACTION_BACK);
-//        }
      }
 
     // 模拟手势滑动

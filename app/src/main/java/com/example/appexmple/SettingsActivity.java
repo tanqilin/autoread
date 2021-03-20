@@ -10,6 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 import androidx.preference.PreferenceFragmentCompat;
 
+// 软件设置页面
 public class SettingsActivity extends AppCompatActivity {
 
     @Override

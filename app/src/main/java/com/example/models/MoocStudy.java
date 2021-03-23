@@ -30,6 +30,7 @@ public class MoocStudy {
 
     private MoocStudy(){}
 
+    /* 传入配置文件初始化学习模式 */
     public static MoocStudy getInstance(MoocConfig config){
         if (instance == null) {
             instance = new MoocStudy();
@@ -39,6 +40,14 @@ public class MoocStudy {
                 instance.readNums = config.getReadCount();
                 instance.readTime = config.getReadTime();
             }
+        }
+        return instance;
+    }
+
+    /* 不传入配置文件使用默认方式初始化学习模式 */
+    public static MoocStudy getInstance(){
+        if (instance == null) {
+            instance = new MoocStudy();
         }
         return instance;
     }

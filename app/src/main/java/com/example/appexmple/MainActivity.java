@@ -100,13 +100,6 @@ public class MainActivity extends AppCompatActivity {
             if(files.length == 0 ){
                 MoocConfigUtil.initAppConfig(openFileOutput("tanqilin.xml", MODE_PRIVATE));
             }
-
-//            if (!(new File(String.valueOf(this.getExternalFilesDir("tanqilin.xml")))).exists())
-//            {
-//                Log.i("1111",String.valueOf(this.getExternalFilesDir("tanqilin.xml")));
-//
-//                MoocConfigUtil.initAppConfig(openFileOutput("tanqilin.xml", MODE_PRIVATE));
-//            }
         }catch (Exception e){}
     }
 
@@ -114,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         long secondTime = System.currentTimeMillis();
         if (secondTime - firstTime > 1000) {
-            //Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
             firstTime = secondTime;
             if(controller != null) controller.navigateUp();
         } else {

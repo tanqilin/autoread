@@ -48,7 +48,7 @@ public class AIReadService extends BaseService {
         try {
             moocStudy = MoocStudy.getInstance(MoocConfigUtil.readAppConfig(this.openFileInput("tanqilin.xml")));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            toastMsg("服务启动失败，请关闭后重启服务！");
         }
         mService = this;
     }

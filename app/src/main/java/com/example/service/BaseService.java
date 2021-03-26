@@ -1,24 +1,36 @@
 package com.example.service;
 
 import android.accessibilityservice.AccessibilityService;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Toast;
+
+import androidx.core.app.NotificationCompat;
+
+import com.example.appexmple.MainActivity;
+import com.example.appexmple.R;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 public class BaseService extends AccessibilityService {
     private static final String TAG = "";
-
     public BaseService() {
-
     }
 
     // 根据Text点击指定节点

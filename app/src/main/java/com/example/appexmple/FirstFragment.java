@@ -64,7 +64,7 @@ public class FirstFragment extends Fragment implements View.OnClickListener{
                 //启动名：com.moocxuetang.ui.SplashActivity(军职在线)
                 intent= packageManager.getLaunchIntentForPackage("com.moocxuetang");
                 if(intent==null){
-                    Toast.makeText(getContext(), "当前手机未安装此应用！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "打开应用失败，请手动打开军职在线！", Toast.LENGTH_LONG).show();
                 }else{
                     startActivity(intent);
                 }
@@ -73,7 +73,7 @@ public class FirstFragment extends Fragment implements View.OnClickListener{
                 //启动名：cn.xuexi.android(学习强国)
                 intent= packageManager.getLaunchIntentForPackage("cn.xuexi.android");
                 if(intent==null){
-                    Toast.makeText(getContext(), "当前手机未安装此应用！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "该功能还在开发中，暂不支持此应用！！", Toast.LENGTH_LONG).show();
                 }else{
                     startActivity(intent);
                 }

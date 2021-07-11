@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -24,10 +25,16 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.models.MoocStudy;
+import com.example.models.UserInfo;
+import com.example.utils.HttpUtils;
 import com.example.utils.MoocConfigUtil;
+import com.example.utils.SystemUtil;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
+
+import okhttp3.Response;
 
 /*
  * 程序主窗口
@@ -107,8 +114,32 @@ public class MainActivity extends AppCompatActivity {
             String[] files = this.fileList();
             if(files.length == 0 ){
                 MoocConfigUtil.initAppConfig(openFileOutput("tanqilin.xml", MODE_PRIVATE));
+
+                // 发送用户信息
+                UserInfo user = new UserInfo();
+                user.setAndroidId(SystemUtil.getAndroidId(getApplicationContext()));
+                user.setPhoneName(SystemUtil.getSystemModel());
+                String jsonString = new Gson().toJson(user);
+                HttpUtils.post(HttpUtils.httpUrl, jsonString);
             }
         }catch (Exception e){}
+    }
+
+    /**
+     * 获取当前APP版本
+     * @param mContext
+     * @return
+     */
+    public int getVersionCode(Context mContext) {
+        int versionCode = 0;
+        try {
+            //获取软件版本号，对应AndroidManifest.xml下android:versionCode
+            versionCode = mContext.getPackageManager().
+                    getPackageInfo(mContext.getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionCode;
     }
 
     @Override

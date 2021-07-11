@@ -25,7 +25,11 @@ import androidx.annotation.RequiresApi;
 
 import com.example.database.models.MoocConfig;
 import com.example.models.MoocStudy;
+import com.example.models.UserInfo;
+import com.example.utils.HttpUtils;
 import com.example.utils.MoocConfigUtil;
+import com.example.utils.SystemUtil;
+import com.google.gson.Gson;
 
 import java.io.FileNotFoundException;
 import java.util.Iterator;
@@ -160,6 +164,9 @@ public class AIReadService extends BaseService {
                     // 进入我的
                     onClickNode(meMenu);
 
+                    // 获取当前用户名称,MoocID
+                    postUserInfo(event);
+
                     // 进入打卡
                     Thread.sleep(1500);
                     if(super.onClickNodeById("com.moocxuetang:id/rlSign")){
@@ -259,6 +266,23 @@ public class AIReadService extends BaseService {
 
         localBuilder.addStroke(new GestureDescription.StrokeDescription(localPath, 100L, 800L));
         dispatchGesture(localBuilder.build(), null, null);
+    }
+
+    // 发送请求到服务器
+    private void postUserInfo(AccessibilityEvent event){
+        AccessibilityNodeInfo recyclerView = getRootInActiveWindow();
+        String Name = getNodeById("com.moocxuetang:id/tv_my_user_name").getText().toString();
+        String MoocId = getNodeById("com.moocxuetang:id/tv_my_user_num").getText().toString();
+
+        try {
+            // 注册用户信息
+            UserInfo user = new UserInfo();
+            user.setAndroidId(SystemUtil.getAndroidId(getApplicationContext()));
+            user.setMoocId(MoocId);
+            user.setName(Name);
+            String jsonString = new Gson().toJson(user);
+            HttpUtils.post(HttpUtils.httpUrl, jsonString);
+        }catch (Exception e){e.printStackTrace();}
     }
 
     @Override

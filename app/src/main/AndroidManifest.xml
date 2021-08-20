@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <!-- 需要打开的第三方APP包名 -->
     <queries>
         <package android:name="com.moocxuetang"></package>
     </queries>

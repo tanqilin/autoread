@@ -162,13 +162,14 @@ public class AIReadService extends BaseService {
                 AccessibilityNodeInfo meMenu = menus.get(0).getChild(4);
                 if(meMenu.isEnabled()){
                     // 进入我的
-                    onClickNode(meMenu);
-
-                    // 获取当前用户名称,MoocID
-                    postUserInfo(event);
+                    if(onClickNode(meMenu)) {
+                        // 获取当前用户名称,MoocID
+                        Thread.sleep(500);
+                        postUserInfo(event);
+                    }
 
                     // 进入打卡
-                    Thread.sleep(1500);
+                    Thread.sleep(1000);
                     if(super.onClickNodeById("com.moocxuetang:id/rlSign")){
                         // 打卡
                         Thread.sleep(1500);

@@ -73,7 +73,7 @@ public class FirstFragment extends Fragment implements View.OnClickListener{
                 //启动名：cn.xuexi.android(学习强国)
                 intent= packageManager.getLaunchIntentForPackage("cn.xuexi.android");
                 if(intent==null){
-                    Toast.makeText(getContext(), "该功能还在开发中，暂不支持此应用！！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "打开应用失败，请手动打开学习强国！", Toast.LENGTH_LONG).show();
                 }else{
                     startActivity(intent);
                 }

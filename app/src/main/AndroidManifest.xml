@@ -5,7 +5,6 @@
     <!-- 外部存储的写权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -13,6 +12,7 @@
     <!-- 需要打开的第三方APP包名 -->
     <queries>
         <package android:name="com.moocxuetang"></package>
+        <package android:name="cn.xuexi.android"></package>
     </queries>
     <application
         android:allowBackup="true"

@@ -102,27 +102,36 @@ public class AIReadService extends BaseService {
                     super.onClickNode("发现");
                     List<AccessibilityNodeInfo> topMenus = getNodeByIds("com.moocxuetang:id/tvTabTitle");
                     if(topMenus != null && topMenus.size() > 0){
-                        Thread.sleep(1500);
-                        onClickNode(topMenus.get(4));
-                        toastMsg("加载文章...");
+                        for (int i = 0; i < topMenus.size(); i++) {
+                            // 找到文章列表
+                            if(topMenus.get(i).getText().equals("文章")){
+                                Thread.sleep(1500);
+                                super.onClickNode(topMenus.get(i));
+                                toastMsg("加载文章...");
 
-                        // 查看文章
-                        Thread.sleep(3000);
-                        dispatchGestureMove();
-                        Thread.sleep(1000);
-                        List<AccessibilityNodeInfo> nodes = getNodeByIds("com.moocxuetang:id/rl_content");
-                        if(moocStudy.getStudyScore() < moocStudy.readNums && (nodes != null && nodes.size() > 0)) {
-                            onClickNode(nodes.get(0));
-                            moocStudy.reading = true;
+                                // 滚动文章列表查看文章
+                                Thread.sleep(3000);
+                                for(int e =0 ;e < (int) (Math.random()*5 + 1);e++) {
+                                    dispatchGestureMove();
+                                    Thread.sleep(1000);
+                                }
+                                Thread.sleep(1000);
+                                List<AccessibilityNodeInfo> nodes = getNodeByIds("com.moocxuetang:id/rl_content");
+                                if(moocStudy.getStudyScore() < moocStudy.readNums && (nodes != null && nodes.size() > 0)) {
+                                    onClickNode(nodes.get(0));
+                                    moocStudy.reading = true;
 
-                            // 开始分享和阅读 ？
-                            Thread.sleep(2000);
-                            autoShare(event);
-                            autoReadArticle();
-                        }else{
-                            moocStudy.reading = false;
-                            toastMsg("今日文章已学完");
-                            return;
+                                    // 开始分享和阅读 ？
+                                    Thread.sleep(2000);
+                                    autoShare(event);
+                                    autoReadArticle();
+                                }else{
+                                    moocStudy.reading = false;
+                                    toastMsg("今日文章已学完");
+                                    return;
+                                }
+                            }
+
                         }
                     }
                 } catch (InterruptedException e) {

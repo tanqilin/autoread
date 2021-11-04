@@ -27,6 +27,7 @@ public class MoocStudy {
     public static String track_menu = "com.moocxuetang:id/track_menu";             // 分享按钮
     public static String ll_share = "com.moocxuetang:id/ll_share";                 // 下拉分享按钮
     public static String item_share_tv = "com.moocxuetang:id/item_share_iv";       // 分享到学友圈
+    public static String TOP_CHILD_MENU = "com.moocxuetang:id/title";               // 文章菜单下的二级菜单列表
 
     private MoocStudy(){}
 

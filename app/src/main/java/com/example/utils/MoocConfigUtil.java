@@ -21,7 +21,7 @@ public class MoocConfigUtil {
      * 写入配置信息
      * @param fileStr 配置文件
      */
-    public static void initAppConfig(FileOutputStream fileStr){
+    public static void initAppConfig(FileOutputStream fileStr,String key){
         XmlSerializer serializer = Xml.newSerializer();
 
         try {
@@ -29,7 +29,7 @@ public class MoocConfigUtil {
             serializer.startDocument("utf-8", true);
             //创建默认配置信息
             serializer.startTag(null,"configs");
-            serializer.attribute(null, "id", "yongjiuxukebianma2021-key");
+            serializer.attribute(null, "id", key);
 
             serializer.startTag(null,"mooc_config");
             serializer.startTag(null,"count");
@@ -105,7 +105,7 @@ public class MoocConfigUtil {
             serializer.startDocument("utf-8", true);
             //创建默认配置信息
             serializer.startTag(null,"configs");
-            serializer.attribute(null, "id", "yongjiuxukebianma2021-key");
+            serializer.attribute(null, "id", config.getUserKey());
 
             serializer.startTag(null,"mooc_config");
             serializer.startTag(null,"count");

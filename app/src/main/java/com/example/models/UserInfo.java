@@ -5,7 +5,7 @@ public class UserInfo {
 
     public String AndroidId;
 
-    public String Name;
+    public String MoocName;
 
     public String Key;              // 用户密钥
 
@@ -26,7 +26,7 @@ public class UserInfo {
     }
 
     public String getName() {
-        return Name;
+        return MoocName;
     }
 
     public void setAndroidId(String androidId) {
@@ -37,8 +37,8 @@ public class UserInfo {
         CreateTime = createTime;
     }
 
-    public void setName(String name) {
-        Name = name;
+    public void setMoocName(String name) {
+        MoocName = name;
     }
 
     public void setPhoneName(String phoneName) {

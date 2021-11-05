@@ -4,12 +4,14 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,9 +26,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.models.AppInfo;
 import com.example.models.MoocStudy;
 import com.example.models.UserInfo;
 import com.example.utils.HttpUtils;
+import com.example.utils.JsonUtil;
 import com.example.utils.MoocConfigUtil;
 import com.example.utils.SystemUtil;
 import com.google.gson.Gson;
@@ -34,6 +38,9 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.Response;
 
 /*
@@ -43,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private long firstTime = 0;
     private NavController controller;
     private Toolbar toolbar;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,16 +121,58 @@ public class MainActivity extends AppCompatActivity {
         try {
             String[] files = this.fileList();
             if(files.length == 0 ){
-                MoocConfigUtil.initAppConfig(openFileOutput("tanqilin.xml", MODE_PRIVATE));
-
-                // 发送用户信息
+                long time=System.currentTimeMillis();
                 UserInfo user = new UserInfo();
-                user.setAndroidId(SystemUtil.getAndroidId(getApplicationContext()));
+                user.setAndroidId(SystemUtil.md5(time+""));
                 user.setPhoneName(SystemUtil.getSystemModel());
+                MoocConfigUtil.initAppConfig(openFileOutput("tanqilin.xml", MODE_PRIVATE),user.getAndroidId());
+
+                /// 注册用户信息
                 String jsonString = new Gson().toJson(user);
-                HttpUtils.post(HttpUtils.httpUrl, jsonString);
+                HttpUtils.post(HttpUtils.httpRegUrl, jsonString);
+            }else{
+                verifyAppVersion();
             }
         }catch (Exception e){}
+    }
+
+    /**
+     * 检查更新，查看当前版本是否为最新版本
+     */
+    public void verifyAppVersion() {
+        final long version = getVersionCode(getApplicationContext());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //1:学什么都能new出一个对象来
+                    OkHttpClient okHttpClient = new OkHttpClient();
+                    Request request = new Request.Builder().url(HttpUtils.httpGetAppInfoUrl).build();
+                    Call call = okHttpClient.newCall(request);
+                    Response response = call.execute();
+                    //从相应体里面拿到数据
+                    String res = response.body().string();
+
+                    // 判断当前版本跟服务器版本
+                    final AppInfo info = JsonUtil.str2Obj(res);
+                    if(version < info.getVersion()) {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                AlertDialog alertDialog1 = new AlertDialog.Builder(MainActivity.this)
+                                        .setTitle("有新版本上线啦") //标题
+                                        .setMessage("新版本号：" + info.getVersionName() + "\n下载地址：39.104.203.40 \n\n新版本已发布，请使用浏览器打开上方ip地址下载吧！") //内容
+                                        .setIcon(R.drawable.tanqilin)//图标
+                                        .create();
+                                alertDialog1.show();
+                            }
+                        });
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     /**

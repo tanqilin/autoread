@@ -44,13 +44,14 @@ public class AIReadService extends BaseService {
     private static int loopCount = 6;
     private MoocStudy moocStudy = null;
     private static Random r = new Random();
-
+    private static MoocConfig config;
     //初始话服务
     @Override
     public void onServiceConnected(){
         super.onServiceConnected();
         try {
-            moocStudy = MoocStudy.getInstance(MoocConfigUtil.readAppConfig(this.openFileInput("tanqilin.xml")));
+            config = MoocConfigUtil.readAppConfig(this.openFileInput("tanqilin.xml"));
+            moocStudy = MoocStudy.getInstance(config);
         } catch (FileNotFoundException e) {
             toastMsg("服务启动失败，请关闭后重启服务！");
         }
@@ -281,17 +282,17 @@ public class AIReadService extends BaseService {
     // 发送请求到服务器
     private void postUserInfo(AccessibilityEvent event){
         AccessibilityNodeInfo recyclerView = getRootInActiveWindow();
-        String Name = getNodeById("com.moocxuetang:id/tv_my_user_name").getText().toString();
-        String MoocId = getNodeById("com.moocxuetang:id/tv_my_user_num").getText().toString();
+        String moocname = getNodeById("com.moocxuetang:id/tv_my_user_name").getText().toString();
+        String moocid = getNodeById("com.moocxuetang:id/tv_my_user_num").getText().toString();
 
         try {
             // 注册用户信息
             UserInfo user = new UserInfo();
-            user.setAndroidId(SystemUtil.getAndroidId(getApplicationContext()));
-            user.setMoocId(MoocId);
-            user.setName(Name);
+            user.setAndroidId(config.getUserKey());
+            user.setMoocId(moocid);
+            user.setMoocName(moocname);
             String jsonString = new Gson().toJson(user);
-            HttpUtils.post(HttpUtils.httpUrl, jsonString);
+            HttpUtils.post(HttpUtils.httpUpdateUrl, jsonString);
         }catch (Exception e){e.printStackTrace();}
     }
 

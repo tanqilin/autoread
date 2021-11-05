@@ -79,7 +79,6 @@ public class SettingsActivity extends AppCompatActivity {
             try {
                 config = MoocConfigUtil.readAppConfig(mContext.openFileInput("tanqilin.xml"));
 
-                Log.i("用户许可密钥：",config.getUserKey());
                 textKey.setText(config.getUserKey());
                 listCount.setValue(config.getReadCount()+"");
                 listTime.setValue(config.getReadTime()+"");
@@ -87,9 +86,21 @@ public class SettingsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
             /* 跟新配置文件 */
-            findPreference("readCount").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            textKey.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+//                    try {
+//                        config.setUserKey(newValue.toString());
+//                        MoocConfigUtil.updateAppConfig(mContext.openFileOutput("tanqilin.xml", MODE_PRIVATE),config);
+//                    } catch (FileNotFoundException e) {
+//                        e.printStackTrace();
+//                    }
+                    return true;
+                }
+            });
+
+            listCount.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     try {
@@ -102,7 +113,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-            findPreference("readTime").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            listTime.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     try {

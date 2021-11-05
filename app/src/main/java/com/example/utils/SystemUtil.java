@@ -5,13 +5,19 @@ import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.util.Log;
+
+import java.security.MessageDigest;
 
 import java.net.NetworkInterface;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -65,6 +71,47 @@ public class SystemUtil {
             return tm.getLine1Number();
         }
         return null;
+    }
+
+    /**
+     * 获取当前app version code
+     */
+    public static long getAppVersionCode(Context context) {
+        long appVersionCode = 0;
+        try {
+            PackageInfo packageInfo = context.getApplicationContext()
+                    .getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                appVersionCode = packageInfo.getLongVersionCode();
+            } else {
+                appVersionCode = packageInfo.versionCode;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("", e.getMessage());
+        }
+        return appVersionCode;
+    }
+
+    /**
+     * 生成MD5编码
+     */
+    private static final char[] hexCode = "0123456789ABCDEF".toCharArray();
+    public static String md5(String input) throws NoSuchAlgorithmException {
+        input += getSystemModel();
+        input += getDeviceBrand();
+        input += getSystemVersion();
+        byte[] bytes = MessageDigest.getInstance("MD5").digest(input.getBytes());
+        return printHexBinary(bytes);
+    }
+
+    private static String printHexBinary(byte[] data) {
+        StringBuilder r = new StringBuilder(data.length * 2);
+        for (byte b : data) {
+            r.append(hexCode[(b >> 4) & 0xF]);
+            r.append(hexCode[(b & 0xF)]);
+        }
+        return r.toString();
     }
 
     public static String getAndroidId(Context ctx) {

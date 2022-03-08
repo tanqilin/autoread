@@ -24,9 +24,30 @@ public class MoocStudy {
     private static MoocStudy instance = null;
 
     /* 军职在线相关资源ID */
-    public static String track_menu = "com.moocxuetang:id/track_menu";             // 分享按钮
-    public static String ll_share = "com.moocxuetang:id/ll_share";                 // 下拉分享按钮
-    public static String item_share_tv = "com.moocxuetang:id/item_share_iv";       // 分享到学友圈
+    public static String package_name = "com.moocxuetang";                          // 包名
+    public static String page_start_time = "com.moocxuetang:id/tvSkip";              // 启动页倒计时
+    public static String page_everday = "com.moocxuetang:id/ibClose";         // 每日分享
+
+    public static String share_score = "com.moocxuetang:id/tvShareScore";           // 分享得分
+    public static String checkin_score = "com.moocxuetang:id/tvCheckinScore";       // 签到得分
+    public static String study_score = "com.moocxuetang:id/tvStudyScore";           // 学习得分
+
+    public static String page_tab_menes = "com.moocxuetang:id/tvTabTitle";          // 发现页顶部菜单列表
+    public static String page_node_list = "com.moocxuetang:id/clOne";               // 文章列表
+
+    public static String bottom_container = "com.moocxuetang:id/llBottomContainer"; // 主页面底部菜单列表
+    public static String user_name = "com.moocxuetang:id/tvUserName";               // 我的页面，用户名称
+    public static String user_mooc_id = "com.moocxuetang:id/tvID";                  // 我的页面用户ID
+
+    public static String go_check_page = "com.moocxuetang:id/tvCheckIn";            //进入打卡页面
+    public static String start_check = "com.moocxuetang:id/tvStart";                // 打卡
+    public static String check_ok_btn = "com.moocxuetang:id/tvOk";                  // 打卡成功确定按钮
+    public static String menber_close = "com.moocxuetang:id/iv_member_close";       // 关闭打卡成功确认后弹出的学友圈
+    public static String come_back_btn = "com.moocxuetang:id/ib_back";              // 打卡成功后左上角返回主页面按钮
+
+    public static String track_menu = "com.moocxuetang:id/ibRightIcon";             // 分享按钮
+    public static String ll_share = "分享";                                           // 下拉分享按钮
+    public static String item_share_tv = "com.moocxuetang:id/tvShareSchoolCircle";       // 分享到学友圈
     public static String TOP_CHILD_MENU = "com.moocxuetang:id/title";               // 文章菜单下的二级菜单列表
 
     private MoocStudy(){}

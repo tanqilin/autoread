@@ -65,15 +65,16 @@ public class AIReadService extends BaseService {
         super.onAccessibilityEvent(event);
 
         // 确定事件来自军职在线 com.moocxuetang
-        if ((event.getEventType() == 32) && (event.getPackageName().equals("com.moocxuetang")))
+        if ((event.getEventType() == 32) && (event.getPackageName().equals(moocStudy.package_name)))
         {
             String eventStr = event.getClassName().toString();
             // 关闭启动页面 -> 关闭启动页面 -> 关闭今日分享
             if(eventStr.contains("SplashActivity") || eventStr.contains("CustomProgressDialog")){
                 try {
-                    super.onClickNodeById("com.moocxuetang:id/tvSkip");
-                    Thread.sleep(2500);
-                    super.onClickNodeById("com.moocxuetang:id/iv_today_read");
+                    Thread.sleep(3500);
+                    super.onClickNodeById(moocStudy.page_start_time);
+                    Thread.sleep(3500);
+                    super.onClickNodeById(moocStudy.page_everday);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -86,9 +87,9 @@ public class AIReadService extends BaseService {
                     if(!moocStudy.isStartRead() && super.onClickNode("今日学习")) {
                         Thread.sleep(1500);
 
-                        moocStudy.setShareScore(getStrIntNumber(getNodeById("com.moocxuetang:id/tip5").getText().toString()));
-                        moocStudy.setSignScore(getStrIntNumber(getNodeById("com.moocxuetang:id/tip2").getText().toString()));
-                        moocStudy.setStudyScore(getStrIntNumber(getNodeById("com.moocxuetang:id/tip4").getText().toString()));
+                        moocStudy.setShareScore(getStrIntNumber(getNodeById(moocStudy.share_score).getText().toString()));
+                        moocStudy.setSignScore(getStrIntNumber(getNodeById(moocStudy.checkin_score).getText().toString()));
+                        moocStudy.setStudyScore(getStrIntNumber(getNodeById(moocStudy.study_score).getText().toString()));
 
                         // 打完卡后跳转到发现页面
                         if (!moocStudy.isSign && moocStudy.getSignScore() == 0) {
@@ -101,7 +102,7 @@ public class AIReadService extends BaseService {
 
                     // 发现 -> 文章
                     super.onClickNode("发现");
-                    List<AccessibilityNodeInfo> topMenus = getNodeByIds("com.moocxuetang:id/tvTabTitle");
+                    List<AccessibilityNodeInfo> topMenus = getNodeByIds(moocStudy.page_tab_menes);
                     if(topMenus != null && topMenus.size() > 0){
                         for (int i = 0; i < topMenus.size(); i++) {
                             // 找到文章列表
@@ -112,12 +113,12 @@ public class AIReadService extends BaseService {
 
                                 // 滚动文章列表查看文章
                                 Thread.sleep(3000);
-                                for(int e =0 ;e < (int) (Math.random()*5 + 1);e++) {
+                                for(int e =0 ;e < (int) (Math.random()*3 + 1);e++) {
                                     dispatchGestureMove();
                                     Thread.sleep(1000);
                                 }
                                 Thread.sleep(1000);
-                                List<AccessibilityNodeInfo> nodes = getNodeByIds("com.moocxuetang:id/rl_content");
+                                List<AccessibilityNodeInfo> nodes = getNodeByIds(moocStudy.page_node_list);
                                 if(moocStudy.getStudyScore() < moocStudy.readNums && (nodes != null && nodes.size() > 0)) {
                                     onClickNode(nodes.get(0));
                                     moocStudy.reading = true;
@@ -167,7 +168,7 @@ public class AIReadService extends BaseService {
 
         if(recyclerView != null){
             // 查找底部菜单
-            List<AccessibilityNodeInfo> menus = recyclerView.findAccessibilityNodeInfosByViewId("com.moocxuetang:id/llBottomContainer");
+            List<AccessibilityNodeInfo> menus = recyclerView.findAccessibilityNodeInfosByViewId(moocStudy.bottom_container);
             if(!menus.isEmpty() && menus.size() > 0){
                 AccessibilityNodeInfo meMenu = menus.get(0).getChild(4);
                 if(meMenu.isEnabled()){
@@ -180,25 +181,25 @@ public class AIReadService extends BaseService {
 
                     // 进入打卡
                     Thread.sleep(1000);
-                    if(super.onClickNodeById("com.moocxuetang:id/rlSign")){
+                    if(super.onClickNodeById(moocStudy.go_check_page)){
                         // 打卡
                         Thread.sleep(1500);
                         recyclerView = getRootInActiveWindow();
-                        List<AccessibilityNodeInfo> signBtns = recyclerView.findAccessibilityNodeInfosByViewId("com.moocxuetang:id/tv_point_sign");
+                        List<AccessibilityNodeInfo> signBtns = recyclerView.findAccessibilityNodeInfosByViewId(moocStudy.start_check);
                         if(!signBtns.isEmpty()){
                             AccessibilityNodeInfo signBtn = signBtns.get(0);
                             if(signBtn.isEnabled()){
                                 onClickNode(signBtn);
                                 Thread.sleep(1500);
-                                super.onClickNodeById("com.moocxuetang:id/layout_quit_more");
+                                super.onClickNodeById(moocStudy.check_ok_btn);
 
                                 Thread.sleep(1500);
-                                super.onClickNodeById("com.moocxuetang:id/iv_member_close");
+                                super.onClickNodeById(moocStudy.menber_close);
                             }
                             toastMsg("今日已打卡...");
                             // 返回首页
                             Thread.sleep(3000);
-                            super.onClickNodeById("com.moocxuetang:id/ll_public_left");
+                            super.onClickNodeById(moocStudy.come_back_btn);
                             return true;
                         }
                     }
@@ -217,14 +218,14 @@ public class AIReadService extends BaseService {
 
             // 点击 分享 com.moocxuetang:id/ll_share
             Thread.sleep(1000);
-            onClickNodeById(MoocStudy.ll_share);
+            onClickNode(MoocStudy.ll_share);
 
-            // 点击第三个 com.moocxuetang:id/item_share_tv
+            // 点击第三个 分享到学友圈
             Thread.sleep(1000);
             List<AccessibilityNodeInfo> shareMenus = getNodeByIds(MoocStudy.item_share_tv);
             if (shareMenus != null && !shareMenus.isEmpty()) {
                 // 分享到学友圈
-                if(onClickNode(shareMenus.get(2)))
+                if(onClickNode(shareMenus.get(0)))
                     moocStudy.setShareScore(moocStudy.getShareScore() + 1);
                 return true;
             }
@@ -282,8 +283,8 @@ public class AIReadService extends BaseService {
     // 发送请求到服务器
     private void postUserInfo(AccessibilityEvent event){
         AccessibilityNodeInfo recyclerView = getRootInActiveWindow();
-        String moocname = getNodeById("com.moocxuetang:id/tv_my_user_name").getText().toString();
-        String moocid = getNodeById("com.moocxuetang:id/tv_my_user_num").getText().toString();
+        String moocname = getNodeById(moocStudy.user_name).getText().toString();
+        String moocid = getNodeById(moocStudy.user_mooc_id).getText().toString();
 
         try {
             // 注册用户信息

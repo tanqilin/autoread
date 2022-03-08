@@ -14,26 +14,31 @@ public class HttpUtils {
     public static String httpUpdateUrl = "http://39.104.203.40/Api/AppApi/RegUpdate";
 
     public static void post(String url, String json) throws IOException {
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
+        new Thread(new Runnable() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                // Log.d("TAG", "onFailure: 失败"+ e.getMessage());
-            }
+            public void run() {
+                RequestBody body = RequestBody.create(JSON, json);
+                Request request = new Request.Builder()
+                        .url(url)
+                        .post(body)
+                        .build();
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String result = response.body().string();
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        // Log.d("TAG", "onFailure: 失败"+ e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String result = response.body().string();
+                    }
+                });
             }
-        });
+        }).start();
     }
 
-    public static String get(final String url) throws IOException {
+    public static String get(final String url){
         new Thread(new Runnable() {
             @Override
             public void run() {

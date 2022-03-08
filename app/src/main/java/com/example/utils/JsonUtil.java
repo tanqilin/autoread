@@ -15,7 +15,6 @@ public class JsonUtil {
     public static AppInfo str2Obj(String jsonData){
         AppInfo info = new AppInfo();
         try{
-            Log.e("",jsonData);
             JSONObject jobj= new JSONObject(jsonData);
             info.setVersion(jobj.getInt("version"));
             info.setVersionName(jobj.getString("versionName"));

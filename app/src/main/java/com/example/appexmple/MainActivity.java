@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                     //从相应体里面拿到数据
                     String res = response.body().string();
 
+                    Log.e("发布的 App Version:",res);
                     // 判断当前版本跟服务器版本
                     final AppInfo info = JsonUtil.str2Obj(res);
                     if(version < info.getVersion()) {
@@ -183,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
     public int getVersionCode(Context mContext) {
         int versionCode = 0;
         try {
-            //获取软件版本号，对应AndroidManifest.xml下android:versionCode
+            //获取软件版本号，对应 build.gradle 下 versionCode
             versionCode = mContext.getPackageManager().
                     getPackageInfo(mContext.getPackageName(), 0).versionCode;
         } catch (PackageManager.NameNotFoundException e) {

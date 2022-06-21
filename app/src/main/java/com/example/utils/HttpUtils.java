@@ -7,33 +7,26 @@ import okhttp3.Response;
 import java.io.IOException;
 
 public class HttpUtils {
-    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    private static final MediaType JSON = MediaType.parse("application/json;charset=utf-8");
     private static OkHttpClient client = new OkHttpClient();
     public static String httpGetAppInfoUrl = "http://39.104.203.40/Api/AppInfo";
     public static String httpRegUrl = "http://39.104.203.40/Api/AppApi/register";
     public static String httpUpdateUrl = "http://39.104.203.40/Api/AppApi/RegUpdate";
+    public static String httpAnswerUrl = "http://39.104.203.40/Api/Answer/PostSubject";
 
-    public static void post(String url, String json) throws IOException {
+    public static void post(String url, String json,Callback callback) throws IOException {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestBody body = RequestBody.create(JSON, json);
+                MediaType mediaType=MediaType.Companion.parse("application/json;charset=utf-8");
+                RequestBody stringBody=RequestBody.Companion.create(json,mediaType);
+
                 Request request = new Request.Builder()
                         .url(url)
-                        .post(body)
+                        .post(stringBody)
                         .build();
 
-                client.newCall(request).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        // Log.d("TAG", "onFailure: 失败"+ e.getMessage());
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        String result = response.body().string();
-                    }
-                });
+                client.newCall(request).enqueue(callback);
             }
         }).start();
     }

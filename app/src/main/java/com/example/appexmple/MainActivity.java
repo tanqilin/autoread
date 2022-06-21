@@ -3,6 +3,7 @@ package com.example.appexmple;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,6 +40,7 @@ import java.io.File;
 import java.io.IOException;
 
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -122,14 +124,23 @@ public class MainActivity extends AppCompatActivity {
             String[] files = this.fileList();
             if(files.length == 0 ){
                 long time=System.currentTimeMillis();
-                UserInfo user = new UserInfo();
-                user.setAndroidId(SystemUtil.md5(time+""));
-                user.setPhoneName(SystemUtil.getSystemModel());
-                MoocConfigUtil.initAppConfig(openFileOutput("tanqilin.xml", MODE_PRIVATE),user.getAndroidId());
+                UserInfo.getInstance().setAndroidId(SystemUtil.md5(time+""));
+                UserInfo.getInstance().setPhoneName(SystemUtil.getSystemModel());
+                MoocConfigUtil.initAppConfig(openFileOutput("tanqilin.xml", MODE_PRIVATE),UserInfo.getInstance().getAndroidId());
 
                 /// 注册用户信息
-                String jsonString = new Gson().toJson(user);
-                HttpUtils.post(HttpUtils.httpRegUrl, jsonString);
+                String jsonString = new Gson().toJson(UserInfo.getInstance());
+                HttpUtils.post(HttpUtils.httpRegUrl, jsonString,new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+
+                    }
+                });
             }else{
                 verifyAppVersion();
             }
